@@ -1,0 +1,1 @@
+Aplikacja glowna programu oraz pliki jej podlegajace
