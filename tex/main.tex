@@ -1,0 +1,658 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{main}
+    
+    
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    Pisanie programu w języku Python wersji 3.6 oraz w nowszych,
+rozpoczynamy od zaimportowania potrzebnych bibliotek.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}74}]:} \PY{c+c1}{\PYZsh{} DEKLARACJA BIBLIOTEK}
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}    \PY{c+c1}{\PYZsh{}obliczenia numeryczne, operacje na macierzach}
+\end{Verbatim}
+
+    Biblioteka NumPy (z ang. Numeric Python) to podstawowy zestaw narzędzi
+inyżnierskich języka Python wspomagającym zaawasowane obliczenia
+numeryczne, w szczególności operacje na macierzach. W powyższej linijce
+kodu zaimportwana została biblioteka "numpy" do naszego programu.
+Używanie nazwy "numpy" w kodzie, przy częstym jej wystepowaniu może być
+uciążliwe. Stąd zastosowany został alias "np". Dzięki niemu, możemy
+precyzować w kodzie, że dana funkcja lub metoda ma być zaimporotwana z
+biblioteki numpy. Sam sposób odwoływania sie przy pomocy aliasu będzie
+wyjaśniony później. Powyższą linijkę można dosłownie rozumieć jako
+"Python, zaimportuj bibliotekę NumPy oraz nadaj jej pseudonim np". Warto
+tutaj wspomnieć o własności języka Python jaką jest rozróżnianie
+wielkości liter (z ang. Case sensitivity). Próba zaimporotowania
+biblioteki NumPy z użyciem dużych i małych liter spowoduje powstanie
+błędu przedstawionego poniżej.
+https://docs.scipy.org/doc/numpy/reference/
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}75}]:} \PY{k+kn}{import} \PY{n+nn}{NumPy} \PY{k}{as} \PY{n+nn}{np}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        ModuleNotFoundError                       Traceback (most recent call last)
+
+        <ipython-input-75-ec0b775bee05> in <module>()
+    ----> 1 import NumPy as np
+    
+
+        ModuleNotFoundError: No module named 'NumPy'
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}76}]:} \PY{k+kn}{from} \PY{n+nn}{math} \PY{k}{import} \PY{n}{sin}\PY{p}{,} \PY{n}{cos}\PY{p}{,} \PY{n}{pi}    \PY{c+c1}{\PYZsh{}funkcje uzyte do wymuszen, wartosc liczby Pi}
+\end{Verbatim}
+
+    W przypadku, w którym wiemy dokładnie co chcemy zaimportować z danej
+biblioteki, możemy odwołać się do konkretnej funkcjonalności. Tak jest
+właśnie w przypadku kolejnej linii kodu. Z biblioteki \emph{math}
+importujemy funkcje odpowiedzialne za wygenerowanie przebiegów sinusa i
+cosinusa. W tym przypadku nie nadajemy żadnego aliasu.
+https://docs.python.org/3/library/math.html.
+
+    Dobrym nawykiem początkującego programisty jest używanie komentarzy. W
+języku Python komentarz jest dodawany poprzez użycie symbolu "\#".
+Kompilator pomija znaki znajdujące się po tym symbolu. W naszym
+przypadku został dodany komentarz informujacy do czego użyta zostanie
+dana biblioteka. Pomaga to na etapie "czyszczenia kodu", gdzie po
+wypróbowaniu kilku bibliotek, zdecydujemy się w końcu na którąś i
+będziemy chcieli inne (niewykorzystane) usunąć.
+
+    Do naszego programu potrzebne jeszcze będą poniższe biblioteki. W sposób
+skrócony ich funkcjonalność opisują komentarze. Na etapie wyboru
+bibliotek warto jest zapoznać się z ich funkcjonalnościami. Szczegółowe
+informacje można znaleźć wpisując w wyszukiwarkę nazwę biblioteki oraz
+słowo "reference". Przykładowe strony użytych bibliotek:
+https://docs.python.org/3/library/math.html
+https://docs.scipy.org/doc/numpy/reference/ https://matplotlib.org
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}77}]:} \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{linalg} \PY{k}{import} \PY{n}{eigh}         \PY{c+c1}{\PYZsh{}analiza harmoniczna }
+         \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{linalg} \PY{k}{import} \PY{n}{inv}          \PY{c+c1}{\PYZsh{}odwracanie macierzy   }
+         \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plot} \PY{c+c1}{\PYZsh{}rysowanie wykresow}
+\end{Verbatim}
+
+    Zdefiniujemy teraz konstrukcję naszego programu używając komentarzy:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}78}]:} \PY{c+c1}{\PYZsh{} Funkcje wlasne}
+         
+         \PY{c+c1}{\PYZsh{} Zdefiniowanie parametrow}
+         
+         \PY{c+c1}{\PYZsh{} Budowanie macierzy}
+         
+         \PY{c+c1}{\PYZsh{} Numeryczne calkowanie rownan ruchu}
+         
+         \PY{c+c1}{\PYZsh{} Wizualizacja wynikow}
+\end{Verbatim}
+
+    Właściwe programowanie rozpoczniemy od definiowania zmiennych. Funkcje
+zostaną dodane później. Definiowanie funkcji na początku programu pomaga
+odnaleźć je w przypadku chęci zrozumienia ich działania.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}79}]:} \PY{n}{Mzred} \PY{o}{=} \PY{l+m+mf}{1.0}
+         \PY{n}{Jzred} \PY{o}{=} \PY{l+m+mf}{1.0}
+         \PY{n}{k} \PY{o}{=} \PY{l+m+mf}{1.0}
+         \PY{n}{b} \PY{o}{=} \PY{l+m+mf}{0.50}
+         \PY{n}{L1} \PY{o}{=} \PY{l+m+mf}{1.0}
+         \PY{n}{L2} \PY{o}{=} \PY{l+m+mf}{2.0} 
+         \PY{n}{y1} \PY{o}{=} \PY{l+m+mf}{0.0}
+         \PY{n}{y2} \PY{o}{=} \PY{l+m+mf}{0.1}
+         \PY{n}{y3} \PY{o}{=} \PY{l+m+mf}{0.3}
+         \PY{n}{y4} \PY{o}{=} \PY{l+m+mf}{0.4}
+         \PY{n}{dof} \PY{o}{=} \PY{l+m+mi}{2}
+         \PY{n}{vkm} \PY{o}{=} \PY{l+m+mf}{10.0} \PY{c+c1}{\PYZsh{}predkosc pojazdu}
+         \PY{n}{t0} \PY{o}{=} \PY{l+m+mf}{0.0}   \PY{c+c1}{\PYZsh{}poczatek symulacji}
+         \PY{n}{tk} \PY{o}{=} \PY{l+m+mf}{60.0} \PY{c+c1}{\PYZsh{}koniec symulacji}
+         \PY{n}{ds} \PY{o}{=} \PY{l+m+mf}{0.01} \PY{c+c1}{\PYZsh{}kork podziału drogi}
+\end{Verbatim}
+
+    Są to wielkości pierwotne- wprowadzane przez użytkownika, opisujące
+badany obiekt oraz jego otocznenie mające na ten obiekt wpływ. W
+analizowanym przypadku, ów wpływ opisywany będzie jako nierówność
+terenu. Poczynione zostało założenie, że krążki nośne zawieszenia
+pojazdu nie odrywają się od podłoża, a przebieg terenu drogi odpowiada
+przemieszczeniom środków krążków. W tym celu musimy wykonać dodatkowe
+obliczenia. Rozpoczniemy od przeliczenia prędkości pojazdu z
+\emph{{[}km/h{]}} na \emph{{[}m/s{]}}:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}80}]:} \PY{n}{v} \PY{o}{=} \PY{n}{vkm} \PY{o}{*} \PY{l+m+mi}{1000} \PY{o}{/} \PY{l+m+mi}{3600}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{v}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+2.7777777777777777
+
+    \end{Verbatim}
+
+    Skoro środki krążków, będą się przemieszczały według profilu drogi,
+musimy tak dobrać krok czasowy symulacji, aby w każdej chwili czasowej
+symulacji \emph{t} należącej do wektora T∈(0, Tk) można było odczytać
+pozycję środka krążka. W tym celu, krok czasowy wyliczymy biorąc pod
+uwagę prędkość przemieszaczania się pojazdu oraz krok podziału drogi,
+przyjęte podczas deklarowania zmiennych. Wykorzystany zostanie wzór v =
+s/t
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}81}]:} \PY{n}{dt} \PY{o}{=} \PY{n}{ds} \PY{o}{/} \PY{n}{v}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{dt}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0.0036000000000000003
+
+    \end{Verbatim}
+
+    Z punktu widzenia symulacji krok czasowy stanowi ważną zmienną mającą
+wpływ na poprawność wyniku oraz czas wykonywania się obliczeń.
+\textbf{tutaj dodać rysunek wykresu czas symulacji, liczba elementów i
+dokładność}
+
+    Uważni czytelnicy na pewno zauważyli, że na krok czasowy \emph{dt} wpływ
+mają prędkość pojazdu oraz krok dyskretyzacji drogi, czyli zmienne
+definiowane przez programistę. Jeśli \emph{v} jest prędkością określoną
+przez konkrente zagadnienie, to jedynym parametrem sterującym zostaje
+krok dyskretyzacji drogi.
+
+    Teraz już na podstawie otrzymanych danych możemy zdefiniować wektor
+czasu trwania symulacji \textbf{T} . Wykorzystana do tego celu zostanie
+instrukcja arange pochodząca z biblioteki NumPy. Przyjżyjmy się sposobie
+jej deklaracji w dokumentacji biblioteki: tutaj rysunek screen czy coś z
+linka. Tworzy on wektor rozpoczynając od wartości \emph{t0} stosując
+krok \emph{dt} do wartości końcowej \emph{tk}, przy czym nie zawiera
+ostatniej wartości. Stąd do warunku końca dodamy jednokrotność
+\emph{dt}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}82}]:} \PY{n}{T} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{t0}\PY{p}{,} \PY{n}{tk}\PY{o}{+}\PY{n}{dt}\PY{p}{,} \PY{n}{dt}\PY{p}{,} \PY{n}{dtype} \PY{o}{=} \PY{n+nb}{float} \PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{T}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[0.00000e+00 3.60000e-03 7.20000e-03 {\ldots} 5.99940e+01 5.99976e+01
+ 6.00012e+01]
+
+    \end{Verbatim}
+
+    Ostatni wyraz macierzy przekracza nieznacznie czas, który założyliśmy.
+Wynika to z błędu reprezentacji liczb przez komputer. Wartość \emph{tk}
+jest przekroczona znacznie mniej niż wynosi krok \emph{dt} więc,
+zastosujemy przypisanie wartości do ostatniej komórki macierzy, stosująć
+indeksowanie z minusem.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}83}]:} \PY{n}{T}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{tk}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{T}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{size}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[0.00000e+00 3.60000e-03 7.20000e-03 {\ldots} 5.99940e+01 5.99976e+01
+ 6.00000e+01]
+16668
+
+    \end{Verbatim}
+
+    Środki krążków są odpowiednio oddalone od środka ciężkości o długości
+\emph{L1} oraz \emph{L2}. Co za tym idzie mają kontakt z podłożem w
+różnych miejscach w jednej chwili czasowej. W związku z tym należy
+wyznaczyć przesunięcie między kolejnymi próbkami, które należy odczytać
+dla danego krążka: \textbf{dodać rysunek z ideą}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}84}]:} \PY{n}{phase} \PY{o}{=} \PY{n+nb}{round} \PY{p}{(}\PY{p}{(}\PY{n}{L2}\PY{o}{\PYZhy{}}\PY{n}{L1}\PY{p}{)}\PY{o}{/}\PY{n}{ds}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{phase}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+100
+
+    \end{Verbatim}
+
+    Język Python sam rozpoznaje typ danych, jakiego chcemy użyć. W
+Internecie dostępnych jest wiele opracowań typów danych języka Python,
+stąd nie będą one omawiane w tym artykule. Warto jednak wspomnieć o
+sposobie na wymuszenie typu danych float w miejscu gdzie interpreter
+oraz kompilator zdecydowały by się na liczbę całkowitą. Wystarczy dodać
+po wartości ".0". Tak w języku Python jako separator dziesiętny używamy
+kropki '.'. Typ danych można sprawdzić wywołując polecenie:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}85}]:} \PY{n+nb}{type}\PY{p}{(}\PY{n}{Mzred}\PY{p}{)}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}85}]:} float
+\end{Verbatim}
+            
+    Na podstawie obliczonych przez równań (dodać odnośnik do równań)
+zaimplementujemy teraz macierze w naszym programie. Przypomnijmy
+oznaczenia M - macierz mas i bezwładności, K - macierz sprężystości, B -
+macierz tłumienia, F - macierz wyrażeń wolnych I- macierz jednostkowa.
+Do implementacji macierzy posłużymy się biblioteką NumPy. Przypomnijmy,
+że nadalismy jej alias "np". Stąd macierz mas i bezwładności przyjmie
+postać:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}86}]:} \PY{n}{M} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{n}{Mzred}    \PY{p}{,}   \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}    \PY{p}{,} \PY{n}{Jzred}\PY{p}{]}\PY{p}{]}\PY{p}{)}   \PY{c+c1}{\PYZsh{}budowanie macierzy mas i bezwladnosci}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{M}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[[1. 0.]
+ [0. 1.]]
+
+    \end{Verbatim}
+
+    Przyjrzymy się temu poleceniu. Początek instrukcji "np.array()" odwołuję
+się do funkcjonalności biblioteki NumPy i każde odnaleźć polecenie
+"array", które tworzy macierz na podstawie dostarczonych danych. Więcej
+o tej metodzie możesz przeczytać tutaj:
+https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html.
+Następnie, wewnątrz okrągłego nawiasu mamy dwa nawiasy kwadratowe.
+Patrząc szerzej zauważysz, że są one użyte w następującym ułożeniu: "{[}
+{[}{]} , {[}{]} {]}". Wewnętrzne nawiasy określają zakres jednego
+wiersza i przedzielone są przecinkiem. Zewnętrzny nawias określa cała
+macierz. Wewnętrzne nawiasy zawierają poszeczególne elementy macierzy.
+Jeśli na tym etapie pojawił Ci się błąd, sprawdź czy zgadza Ci się
+liczba nawiasów. Większość edytorów tekstu ze sprawdzaniem składni
+języka Python podpowiada, który nawias nie ma pary.
+
+    W identyczny sposób zbudowane zostają pozostałe macierze:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}87}]:} \PY{n}{K} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(} \PY{p}{[}    \PY{p}{[}\PY{l+m+mi}{4} \PY{o}{*} \PY{n}{k}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{k} \PY{o}{*} \PY{p}{(}\PY{n}{L1}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{k} \PY{o}{*} \PY{p}{(}\PY{n}{L2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}  \PY{p}{]}   \PY{p}{]} \PY{p}{)}
+         \PY{n}{B} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(} \PY{p}{[}    \PY{p}{[}\PY{l+m+mi}{4} \PY{o}{*} \PY{n}{b}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{b} \PY{o}{*} \PY{p}{(}\PY{n}{L1}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{b} \PY{o}{*} \PY{p}{(}\PY{n}{L2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}  \PY{p}{]}   \PY{p}{]} \PY{p}{)}
+         \PY{n}{D} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(} \PY{p}{[}\PY{p}{[}\PY{n}{k}\PY{o}{*}\PY{p}{(}\PY{n}{y1} \PY{o}{+} \PY{n}{y2} \PY{o}{+} \PY{n}{y3} \PY{o}{+} \PY{n}{y4}\PY{p}{)}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{n}{k} \PY{o}{*}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{y1}\PY{o}{*}\PY{n}{L1}  \PY{o}{\PYZhy{}} \PY{n}{y2}\PY{o}{*}\PY{n}{L2}   \PY{o}{+}   \PY{n}{y3} \PY{o}{*} \PY{n}{L2}   \PY{o}{+}   \PY{n}{y4}\PY{o}{*}\PY{n}{L1}\PY{p}{)}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+         \PY{n}{I} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{identity}\PY{p}{(}\PY{n}{dof}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    O ile znak dodawania + oraz mnożenia * jest taki sam jak w znacznej
+większości języków programowania, to szczególną uwage należy zwrócić na
+znak podnoszenia do potęgi. W języku Python wykorzystywany jest **
+zamiast powszechnie używanego "\^{}".
+
+    Przejdźmy teraz do zdefiniowania pierwszej funkcji w sekcji \#Funkcje
+wlasne. Będzie to funkcja opisujaca profil drogi. Na podstawie
+parametrów zadanych w czasie wywołania będzie zwracała funkcję opisującą
+wymuszenia. Definicja funkcji jest niebywale prosta. Należy jednak
+pamiętać o kilku zasadach. Definicję rozpoczynamy od słowa 'def'. Dalej
+po spacji podajemy nazwę funkcji, przy pomocy której będziemy ją
+wywoływać. Musi spełniać ona ogólne wymogi dotyczące nazw zmiennych oraz
+funkcji w języku Python. W nawiasie znajdować się będą parametry, które
+zostaną podane w czasie wywołania funkcji. W poniższym przykładzie jest
+to zmienna a. Koniecznie należy pamiętać o zakończeniu nagłówka funkcji,
+którym jest znak ":". Instrukcje wewnątrz pętli muszą rozpoczynać się od
+wcięcia na jeden tabulator (4 spacje). Jest to podstawa składni języka
+Python, która odróżnia go od innych języków. Wcięcia w tekście służą do
+porządkowania kodu i są wymagane do poprawnego działania programu.
+Definicja funkcji, która zwraca jakąś wielkość zakończona jest
+poleceniem "return".
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}88}]:} \PY{k}{def} \PY{n+nf}{profil\PYZus{}drogi}\PY{p}{(}\PY{n}{a1}\PY{p}{,} \PY{n}{a2}\PY{p}{,} \PY{n}{T1}\PY{p}{,} \PY{n}{T2}\PY{p}{,} \PY{n}{v}\PY{p}{,} \PY{n}{T}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{}Zwraca funkcje poliharmoniczna na podstawie wektora czasu}
+             \PY{c+c1}{\PYZsh{}Input:    a1,T1 \PYZhy{} amplituda i okres pierwszej skladowej wymuszenia}
+             \PY{c+c1}{\PYZsh{}          a2,T2 \PYZhy{} amplituda i okres drugiej skladowej wymuszenia}
+             \PY{c+c1}{\PYZsh{}          v     \PYZhy{} predkosc pojazdu}
+             \PY{c+c1}{\PYZsh{}          ds, dt\PYZhy{} krok dla czasu i dla drogi}
+             \PY{c+c1}{\PYZsh{}          T     \PYZhy{} wektor czasu symulacji}
+             \PY{n}{result} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(} \PY{n}{np}\PY{o}{.}\PY{n}{size}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{p}{)}     \PY{c+c1}{\PYZsh{}tworzenie macierzy wynikowej}
+             \PY{c+c1}{\PYZsh{}przypisywanie profilu drogi z uwzględnieniem plaskiego poczatku}
+             
+             
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{size}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{if} \PY{p}{(}\PY{n}{T}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n}{T1}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{result}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{0}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{result}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{a1}\PY{o}{*} \PY{n}{sin}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*} \PY{n}{pi}\PY{o}{/}\PY{n}{T1}\PY{o}{*}\PY{n}{T}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n}{a2}\PY{o}{*} \PY{n}{sin} \PY{p}{(}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{pi}\PY{o}{/}\PY{n}{T2}\PY{o}{*}\PY{n}{T}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+             \PY{k}{return} \PY{n}{result}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}92}]:} \PY{n}{A} \PY{o}{=} \PY{n}{profil\PYZus{}drogi}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mf}{0.05}\PY{p}{,} \PY{l+m+mi}{10} \PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{v}\PY{p}{,} \PY{n}{T}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}plot(T,A)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}93}]:} \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plot}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{T}\PY{p}{,} \PY{n}{A}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{n}{xlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{time (s)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{voltage (mV)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                \PY{n}{title}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Profil drogi}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}fig.savefig(\PYZdq{}test.png\PYZdq{})}
+         \PY{n}{plot}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_40_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
